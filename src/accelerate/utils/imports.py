@@ -74,7 +74,12 @@ def get_ccl_version():
 
 
 def is_fp8_available():
-    return _is_package_available("transformer_engine")
+    if _is_package_available("transformer_engine"):
+        from transformer_engine.pytorch.fp8 import is_fp8_available
+        _is_fp8_available, _ = is_fp8_available()
+        return _is_fp8_available
+    else:
+        return False
 
 
 @lru_cache
